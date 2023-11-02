@@ -6,7 +6,7 @@ export const placesFetchApi = async ({
   ll,
   radius,
   categories,
-  fields,
+  fields = 'fsq_id,name,geocodes,location,distance,tel,website,rating,menu,photos',
   limit,
   openNow = true,
   query,
