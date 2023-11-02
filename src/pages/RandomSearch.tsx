@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { DEFAULT_CENTER_LOCATION, SEARCH_CATEGORY, SEARCH_RADIUS } from '../../config';
 import getRandom from '../utils/getRandom';
 import { placeSearchApiInterface } from '../types/placeSearchApi';
+import { Button } from 'antd';
 
 const RandomSearch = () => {
   const [location, setLocation] = useState<placeSearchApiInterface>();
@@ -23,7 +24,18 @@ const RandomSearch = () => {
     }
   }, [data]);
 
-  return <div>RandomSearch</div>;
+  return (
+    <Button
+      type="primary"
+      shape="round"
+      size={'large'}
+      onClick={() => {
+        setLocation(getRandom<placeSearchApiInterface>(data.results as placeSearchApiInterface[]));
+      }}
+    >
+      Random
+    </Button>
+  );
 };
 
 export default RandomSearch;
