@@ -5,6 +5,7 @@ import { DEFAULT_CENTER_LOCATION, SEARCH_CATEGORY, SEARCH_RADIUS } from '../../c
 import getRandom from '../utils/getRandom';
 import { placeSearchApiInterface } from '../types/placeSearchApi';
 import { Button } from 'antd';
+import MapView from '../components/MapView';
 
 const RandomSearch = () => {
   const [location, setLocation] = useState<placeSearchApiInterface>();
@@ -25,16 +26,19 @@ const RandomSearch = () => {
   }, [data]);
 
   return (
-    <Button
-      type="primary"
-      shape="round"
-      size={'large'}
-      onClick={() => {
-        setLocation(getRandom<placeSearchApiInterface>(data.results as placeSearchApiInterface[]));
-      }}
-    >
-      Random
-    </Button>
+    <>
+      <Button
+        type="primary"
+        shape="round"
+        size={'large'}
+        onClick={() => {
+          setLocation(getRandom<placeSearchApiInterface>(data.results as placeSearchApiInterface[]));
+        }}
+      >
+        Random
+      </Button>
+      {location && <MapView latitude={location.geocodes.main.latitude} longitude={location.geocodes.main.longitude} />}
+    </>
   );
 };
 
