@@ -5,11 +5,11 @@ export interface placeSearchApiInterface {
   geocodes: {
     main: {
       latitude: number;
-      longtitude: number;
+      longitude: number;
     };
     roof: {
       latitude: number;
-      longtitude: number;
+      longitude: number;
     };
   };
   location: {

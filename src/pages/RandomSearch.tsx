@@ -4,20 +4,23 @@ import { useQuery } from 'react-query';
 import { DEFAULT_CENTER_LOCATION, SEARCH_CATEGORY, SEARCH_RADIUS } from '../../config';
 import getRandom from '../utils/getRandom';
 import { placeSearchApiInterface } from '../types/placeSearchApi';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import MapView from '../components/MapView';
+
+const { Search } = Input;
+
+const queryParams = {
+  ll: `${DEFAULT_CENTER_LOCATION.latitude},${DEFAULT_CENTER_LOCATION.longitude}`,
+  radius: SEARCH_RADIUS,
+  categories: SEARCH_CATEGORY,
+  limit: 50,
+};
 
 const RandomSearch = () => {
   const [location, setLocation] = useState<placeSearchApiInterface>();
+  const [query, setQuery] = useState<string>();
 
-  const { data } = useQuery('TodoListAPI', () =>
-    placesFetchApi({
-      ll: `${DEFAULT_CENTER_LOCATION.latitude},${DEFAULT_CENTER_LOCATION.longitude}`,
-      radius: SEARCH_RADIUS,
-      categories: SEARCH_CATEGORY,
-      limit: 50,
-    })
-  );
+  const { data, refetch } = useQuery(['PlaceFetchAPI'], () => placesFetchApi(queryParams));
 
   useEffect(() => {
     if (data?.results?.length > 0) {
@@ -27,6 +30,18 @@ const RandomSearch = () => {
 
   return (
     <>
+      <Search
+        placeholder="input search text"
+        enterButton="Search"
+        value={query}
+        onChange={e => {
+          setQuery(e.target.value);
+        }}
+        onSearch={() => {
+          refetch();
+        }}
+        loading={false}
+      />
       <Button
         type="primary"
         shape="round"
