@@ -3,7 +3,7 @@ import { placesFetchApi } from '../api/foursquareApi';
 import { useQuery } from 'react-query';
 import { DEFAULT_CENTER_LOCATION, SEARCH_CATEGORY, SEARCH_RADIUS } from '../../config';
 import getRandom from '../utils/getRandom';
-import { placeSearchApiInterface } from '../types/placeSearchApi';
+import { placeSearchApiInterface } from '../types/foursquareApi';
 import { Button, Input } from 'antd';
 import MapView from '../components/MapView';
 
