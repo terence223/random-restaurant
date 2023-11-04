@@ -56,14 +56,14 @@ Actually I was hesitant at choosing which api, Google map place api or Foursquar
 
 Recently I developed a simple todo project to practice full-stack development
 
-Homepage : [https://terence223.github.io/todo-frontend/signup](https://github.com/terence223/todo-backend)
+Homepage : [https://terence223.github.io/todo-frontend/signup](https://terence223.github.io/todo-frontend/signup)
 
-Frontend code : [https://github.com/terence223/todo-frontend](https://github.com/terence223/todo-backend)
+Frontend code : [https://github.com/terence223/todo-frontend](https://github.com/terence223/todo-frontend)
 
 Backend code : [https://github.com/terence223/todo-backend](https://github.com/terence223/todo-backend)
 
 ## Resume and Profile
 
-Resume : [https://d.pr/f/uXZpqQ](https://www.linkedin.com/in/terence223/)
+Resume : [https://d.pr/f/uXZpqQ](https://d.pr/f/uXZpqQ)
 
 Linkedin : [https://www.linkedin.com/in/terence223/](https://www.linkedin.com/in/terence223/)
