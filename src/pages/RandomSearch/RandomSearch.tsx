@@ -63,7 +63,7 @@ const RandomSearch = () => {
               setDetailModal(true);
             }}
           />
-          <ButtonArea>
+          <ButtonArea className="test-button-area">
             <SearchInput
               value={query}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
