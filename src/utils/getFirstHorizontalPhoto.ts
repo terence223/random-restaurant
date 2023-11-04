@@ -1,5 +1,5 @@
 // return frist HorizontalPhoto, if there is no Horizontal one, return vertical one
-import { PhotoType } from '../types/foursquareApi';
+import type { PhotoType } from '../types/foursquareApi';
 import { FOURSQUARE_API_PHOTOS_KEYWORD } from '../../config';
 
 export default function getFirstHorizontalPhoto(arr: PhotoType[]) {

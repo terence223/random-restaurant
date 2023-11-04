@@ -2,7 +2,7 @@ import Gallery from 'react-photo-gallery';
 import { Card, Modal } from 'antd';
 import styled from 'styled-components';
 
-import { PlaceSearchApiInterface } from '../../types/foursquareApi';
+import type { PlaceSearchApiInterface } from '../../types/foursquareApi';
 import { FOURSQUARE_API_PHOTOS_KEYWORD } from '../../../config';
 
 const Title = styled.h4`
@@ -14,35 +14,35 @@ const ReviewCard = styled(Card)`
 `;
 
 const DetailModal = ({
-  location,
-  detailModal,
+  curLocation,
+  showDetailModal,
   closeModal,
 }: {
-  location: PlaceSearchApiInterface;
-  detailModal: boolean;
+  curLocation: PlaceSearchApiInterface;
+  showDetailModal: boolean;
   closeModal: () => void;
 }) => {
   return (
-    <Modal title={location.name} centered open={detailModal} footer="" onCancel={closeModal}>
-      {location.tel && (
+    <Modal title={curLocation.name} centered open={showDetailModal} footer="" onCancel={closeModal}>
+      {curLocation.tel && (
         <>
           <Title>Phone</Title>
-          <a href={`tel:${location.tel}`}>{location.tel}</a>
+          <a href={`tel:${curLocation.tel}`}>{curLocation.tel}</a>
         </>
       )}
-      {location.menu && (
+      {curLocation.menu && (
         <>
           <Title>Menu</Title>
-          <a href={location.menu} target="_blank">
-            {location.menu}
+          <a href={curLocation.menu} target="_blank">
+            {curLocation.menu}
           </a>
         </>
       )}
-      {location.photos?.length && (
+      {curLocation.photos?.length && (
         <>
           <Title>Photos</Title>
           <Gallery
-            photos={location.photos.map(photo => {
+            photos={curLocation.photos.map(photo => {
               return {
                 src: `${photo.prefix}${FOURSQUARE_API_PHOTOS_KEYWORD}${photo.suffix}`,
                 width: photo.width,
@@ -52,10 +52,10 @@ const DetailModal = ({
           />
         </>
       )}
-      {location.tips?.length && (
+      {curLocation.tips?.length && (
         <>
           <Title>Reviews</Title>
-          {location.tips.map(tip => {
+          {curLocation.tips.map(tip => {
             return <ReviewCard key={tip.created_at}>{tip.text}</ReviewCard>;
           })}
         </>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PLACE_SEARCH_API_URL: string = 'https://api.foursquare.com/v3/places/search';
+const PLACE_SEARCH_API_URL = 'https://api.foursquare.com/v3/places/search';
 
 export type PlacesFetchApiParamsType = {
   ll: string;

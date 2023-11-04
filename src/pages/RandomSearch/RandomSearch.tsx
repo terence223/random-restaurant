@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Button, ConfigProvider } from 'antd';
 import styled from 'styled-components';
 import { RedoOutlined } from '@ant-design/icons';
 
 import { placesFetchApi, PlacesFetchApiParamsType } from '../../api/foursquareApi';
 import { DEFAULT_CENTER_LOCATION, SEARCH_CATEGORY, SEARCH_RADIUS, FOURSQUARE_RESPONSE_FIELDS } from '../../../config';
 import getRandom from '../../utils/getRandom';
-import { PlaceSearchApiInterface } from '../../types/foursquareApi';
+import type { PlaceSearchApiInterface } from '../../types/foursquareApi';
 import MapView from '../../components/MapView';
 import logo from '../../assets/logo.png';
 import RestaurantCard from './RestaurantCard';
 import DetailModal from './DetailModal';
 import SearchInput from '../../components/SearchInput';
+import MainColorButton from '../../components/MainColorButton';
 
 const Container = styled.div`
   margin: 20px 20px;
+`;
+
+const MapViewContainer = styled.div`
+  height: 340px;
 `;
 
 const ButtonArea = styled.div`
@@ -24,10 +28,8 @@ const ButtonArea = styled.div`
   margin: 20px 0px;
 `;
 
-const RandomButton = styled(Button)`
-  &:focus {
-    outline: 0;
-  }
+const RandomButton = styled(MainColorButton)`
+  margin-left: 8px;
 `;
 
 const defaultParams = {
@@ -39,28 +41,28 @@ const defaultParams = {
 };
 
 const RandomSearch = () => {
-  const [location, setLocation] = useState<PlaceSearchApiInterface>();
+  const [curLocation, setCurLocation] = useState<PlaceSearchApiInterface>();
   const [query, setQuery] = useState<string>();
-  const [detailModal, setDetailModal] = useState<boolean>(false);
+  const [showDetailModal, setShowDetailModal] = useState<boolean>(false);
   const [params, setParams] = useState<PlacesFetchApiParamsType>(defaultParams);
 
   const { data, isLoading } = useQuery(['PlacesFetchAPI', params], () => placesFetchApi(params));
 
   useEffect(() => {
     if (data?.results?.length > 0) {
-      setLocation(getRandom<PlaceSearchApiInterface>(data.results as PlaceSearchApiInterface[]));
+      setCurLocation(getRandom<PlaceSearchApiInterface>(data.results as PlaceSearchApiInterface[]));
     }
   }, [data]);
 
   return (
     <>
       <img src={logo} style={{ width: '100%' }} alt="" />
-      {location && (
+      {curLocation && (
         <Container>
           <RestaurantCard
-            location={location}
+            curLocation={curLocation}
             openModal={() => {
-              setDetailModal(true);
+              setShowDetailModal(true);
             }}
           />
           <ButtonArea className="test-button-area">
@@ -77,43 +79,27 @@ const RandomSearch = () => {
               }}
               loading={isLoading}
             />
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: '#1ea1a8',
-                },
-                components: {
-                  Button: {
-                    borderColorDisabled: '#1ea1a8',
-                    defaultShadow: '0 2px 0 #1ea1a8',
-                  },
-                },
+            <RandomButton
+              onClick={() => {
+                setCurLocation(getRandom<PlaceSearchApiInterface>(data.results as PlaceSearchApiInterface[]));
               }}
             >
-              <RandomButton
-                style={{ marginLeft: '8px' }}
-                type="primary"
-                onClick={() => {
-                  setLocation(getRandom<PlaceSearchApiInterface>(data.results as PlaceSearchApiInterface[]));
-                }}
-              >
-                <RedoOutlined /> Random
-              </RandomButton>
-            </ConfigProvider>
+              <RedoOutlined /> Random
+            </RandomButton>
           </ButtonArea>
-          <div style={{ height: '340px' }}>
+          <MapViewContainer>
             <MapView
               centerLatitude={DEFAULT_CENTER_LOCATION.latitude}
               centerLongitude={DEFAULT_CENTER_LOCATION.longitude}
-              latitude={location.geocodes.main.latitude}
-              longitude={location.geocodes.main.longitude}
+              latitude={curLocation.geocodes.main.latitude}
+              longitude={curLocation.geocodes.main.longitude}
             />
-          </div>
+          </MapViewContainer>
           <DetailModal
-            location={location}
-            detailModal={detailModal}
+            curLocation={curLocation}
+            showDetailModal={showDetailModal}
             closeModal={() => {
-              setDetailModal(false);
+              setShowDetailModal(false);
             }}
           />
         </Container>

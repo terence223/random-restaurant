@@ -1,14 +1,20 @@
 import { Card } from 'antd';
 import { LinkOutlined, EnvironmentOutlined, DownSquareOutlined } from '@ant-design/icons';
 
-import { PlaceSearchApiInterface } from '../../types/foursquareApi';
+import type { PlaceSearchApiInterface } from '../../types/foursquareApi';
 import getFirstHorizontalPhoto from '../../utils/getFirstHorizontalPhoto';
 
 const { Meta } = Card;
 
-const RestaurantCard = ({ location, openModal }: { location: PlaceSearchApiInterface; openModal: () => void }) => {
-  const coverPhoto = location?.photos?.length ? getFirstHorizontalPhoto(location.photos) : '';
-  const ratingWord = location?.rating ? ` ★ ${location.rating}` : '';
+const RestaurantCard = ({
+  curLocation,
+  openModal,
+}: {
+  curLocation: PlaceSearchApiInterface;
+  openModal: () => void;
+}) => {
+  const coverPhoto = curLocation?.photos?.length ? getFirstHorizontalPhoto(curLocation.photos) : '';
+  const ratingWord = curLocation?.rating ? ` ★ ${curLocation.rating}` : '';
 
   return (
     <Card
@@ -17,7 +23,7 @@ const RestaurantCard = ({ location, openModal }: { location: PlaceSearchApiInter
         <div
           onClick={() => {
             window.open(
-              `https://www.google.com/maps?q=${location.name} ${location?.location?.formatted_address}`,
+              `https://www.google.com/maps?q=${curLocation.name} ${curLocation?.location?.formatted_address}`,
               '_blank'
             );
           }}
@@ -26,7 +32,7 @@ const RestaurantCard = ({ location, openModal }: { location: PlaceSearchApiInter
         </div>,
         <div
           onClick={() => {
-            window.open(location?.website, '_blank');
+            window.open(curLocation?.website, '_blank');
           }}
         >
           <LinkOutlined key="website" style={{ marginRight: '6px' }} />
@@ -38,7 +44,7 @@ const RestaurantCard = ({ location, openModal }: { location: PlaceSearchApiInter
         </div>,
       ]}
     >
-      <Meta title={`${location.name}   ${ratingWord}`} description={location?.location?.formatted_address} />
+      <Meta title={`${curLocation.name}   ${ratingWord}`} description={curLocation?.location?.formatted_address} />
     </Card>
   );
 };
