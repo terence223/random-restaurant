@@ -1,7 +1,17 @@
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import { DEFAULT_CENTER_LOCATION } from '../../config';
 
-const MapView = ({ latitude, longitude }: { latitude: number; longitude: number }) => {
+const MapView = ({
+  centerLatitude,
+  centerLongitude,
+  latitude,
+  longitude,
+}: {
+  centerLatitude: number;
+  centerLongitude: number;
+  latitude: number;
+  longitude: number;
+}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
@@ -10,9 +20,9 @@ const MapView = ({ latitude, longitude }: { latitude: number; longitude: number 
 
   return (
     <GoogleMap
-      center={{ lat: DEFAULT_CENTER_LOCATION.latitude, lng: DEFAULT_CENTER_LOCATION.longitude }}
+      center={{ lat: centerLatitude, lng: centerLongitude }}
       zoom={14}
-      mapContainerStyle={{ width: '800px', height: '400px' }}
+      mapContainerStyle={{ margin: 'auto', width: '100%', height: '100%' }}
     >
       <MarkerF position={{ lat: DEFAULT_CENTER_LOCATION.latitude, lng: DEFAULT_CENTER_LOCATION.longitude }} />
       <MarkerF
